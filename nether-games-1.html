@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nether Games — A Memory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0c0b14;
+      --surface: #131220;
+      --accent: #e8744a;
+      --gold: #f0a84c;
+      --text: #e2d9ce;
+      --muted: #6e6678;
+      --border: rgba(232, 116, 74, 0.18);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 64px 20px 80px;
+      line-height: 1.85;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ambient glows */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90vw;
+      height: 65vh;
+      background: radial-gradient(ellipse, rgba(232, 116, 74, 0.07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -10%;
+      left: 30%;
+      width: 60vw;
+      height: 40vh;
+      background: radial-gradient(ellipse, rgba(240, 168, 76, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      margin-bottom: 44px;
+    }
+
+    .server-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 14px;
+      opacity: 0.85;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 8vw, 3.8rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    h1 span {
+      color: var(--accent);
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--muted);
+      font-style: italic;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 56px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      margin: 36px auto;
+    }
+
+    /* ── Card ── */
+    .content-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 44px 52px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* top accent line */
+    .content-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 5%, var(--accent) 40%, var(--gold) 60%, transparent 95%);
+    }
+
+    .big-quote {
+      font-size: 100px;
+      line-height: 0.75;
+      color: var(--accent);
+      opacity: 0.15;
+      font-family: Georgia, serif;
+      position: absolute;
+      top: 28px;
+      left: 36px;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .content-text {
+      font-size: 18px;
+      line-height: 1.9;
+      color: var(--text);
+    }
+
+    .content-text p {
+      margin-bottom: 1.45em;
+    }
+    .content-text p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    /* ── Signature ── */
+    .signature {
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .sig-left {}
+    .sig-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .sig-alt {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 3px;
+      letter-spacing: 1px;
+    }
+    .sig-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      margin-top: 52px;
+    }
+    .footer-thanks {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+    .footer-thanks .heart {
+      color: var(--accent);
+    }
+    .footer-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      opacity: 0.45;
+      margin-top: 8px;
+      letter-spacing: 1px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 560px) {
+      .content-card {
+        padding: 32px 22px 32px;
+      }
+      .content-text {
+        font-size: 16.5px;
+      }
+      .big-quote {
+        font-size: 70px;
+        left: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <span class="server-tag">In Memory Of</span>
+      <h1>Nether <span>Games</span></h1>
+      <p class="subtitle">A childhood. A community. A home.</p>
+    </header>
+
+    <div class="divider"></div>
+
+    <div class="content-card">
+      <div class="big-quote">"</div>
+
+      <div class="content-text">
+        <p>I can't believe Nether Games is actually shutting down. I might be sounding a bit dramatic, but the truth is, I have a deep emotional connection to this server. I still remember the first day I joined; honestly, there were so many pro players back then—I even switched to playing on Lifeboat for a while—but eventually, I came back to Nether Games.</p>
+
+        <p>This server turned me into the best player in my friend circle; I honed all my skills—bridging, PvP, movement, and clutches—right here on NG. The players on NG were so epic; I met and chatted with so many crazy people, and some of them are still my friends on Discord today. I joined NG after watching a video by a YouTuber named Epic Killer. I met so many YouTubers here. This wasn't just a server; it was my childhood.</p>
+
+        <p>Back then, I'd start playing on Sunday mornings, and before I knew it, the day would turn into a golden afternoon. I used to sit right by the gate just to get a stable ping. I played a lot of "The Bridge" here; I remember seeing a guy type "plz no goal, PvP with hands" during a match, so I started doing it too—since you couldn't really pull off clutches in Sumo.</p>
+
+        <p>The players here were amazing; if you wrote that, they'd actually engage in PvP and clutches. Some would even ask how to bridge, and I'd teach them, just as others would help me with things I didn't know. Trolling noobs was the most fun part.</p>
+
+        <p>When I found out NG was closing, I couldn't believe it, but I had to accept it. Even when I have free time, I find myself thinking about it against my will. I tell myself it's just a server—if it closes, I'll just play another one—but I still can't bring myself to forget it. It's June 26, 2023, and I just noticed there were only 25 people playing on the server; it really makes me feel like this is the end.</p>
+
+        <p>Whenever I was online, I'd eventually quit the game, but I always ended up playing on this server. There's so much more to say, but this is getting too long—I'm forgetting things and leaving others unsaid, and I know I'll definitely regret it later.</p>
+
+        <p>I just want to play on this server with my brother one last time, but unfortunately, my other phone is broken—entirely my own fault—and I truly regret it, though I'm hoping it gets fixed soon.</p>
+
+        <p>Anyway, I want to give a huge thanks to Callum and Dries for making my last 3–5 years so honorable and memorable. Hats off to Callum's parents for giving him such a great gift on his 11th birthday. I understand that, naturally, the owners have their own lives to live, so go on and live your lives well—and go achieve something truly great in life, my brother.</p>
+
+        <div class="signature">
+          <div class="sig-left">
+            <div class="sig-name">~ ImmortalK1ra</div>
+            <div class="sig-alt">Yes Dream 00</div>
+          </div>
+          <div class="sig-date">June 26, 2023</div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p class="footer-thanks">Thank you, Callum &amp; Dries &nbsp;<span class="heart">♥</span></p>
+      <p class="footer-sub">Nether Games · Forever in memory</p>
+    </footer>
+
+  </div>
+</body>
+</html>
